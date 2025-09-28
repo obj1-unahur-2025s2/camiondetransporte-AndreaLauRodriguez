@@ -19,6 +19,13 @@ object camion{
         return cosasCargadas.any({c=>c.peso().between(valorMin, valorMax)})
     }
     method laCosaMasPesada() = cosasCargadas.max({c=>c.peso()})
+    method estaExcedido() = cosasCargadas.sum({c =>c.peso()}) > 2500
+    method ningunoSuperaPeligrosidad(nivel){
+        return self.cosasPeligrosas(nivel).isEmpty()
+    }
+    method puedeCircular(unNivelPeligrosidad)= (not self.estaExcedido()) and self.ningunoSuperaPeligrosidad(unNivelPeligrosidad)
+
+    
 }  
 
 
