@@ -2,8 +2,28 @@ import cosas.*
 
 describe "group of test for cosas" {
 
-  test "first test" {
-    assert.that(true)
+  test "cantidad de ladrillos del paquete de ladrillos" {
+    assert.equals(paqueteLadrillos.peso(),2)
+  }
+  test "nivel de peligrosidad del paquete de ladrillos" {
+    assert.equals(paqueteLadrillos.nivelDePeligrosidad(),2)
+  }
+  test "aumenta el peso del paquete de ladrillos al agregar 5 ladrillos"{
+    paqueteLadrillos.agregarLadrillos(5)
+    assert.that(paqueteLadrillos.peso() > 2)
+   
+  }
+  test "agregar al contenedor material radiactivo y averiguar el peso"{
+    contenedorPortuario.agregarCosas(residuosRadiactivos)
+    contenedorPortuario.agregarCosas(auto)
+    contenedorPortuario.agregarCosas(robot)
+    assert.that(contenedorPortuario.peso() >110)
+  }
+
+test "agregar al embalaje  ponerle adentro los residuos radioactivos con 30 kg de peso"{
+    residuosRadiactivos.agregarPeso(20)
+    embalajeDeSeguridad.ponerCosa(residuosRadiactivos)
+    assert.that(embalajeDeSeguridad.nivelDePeligrosidad() <30)
   }
 
 }

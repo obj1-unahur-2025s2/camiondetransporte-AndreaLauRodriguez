@@ -2,10 +2,11 @@
 import cosas.*
 object camion{
     const peso = 1000
-    const cosasCargadas=[robot,auto]
-   
+    const cosasCargadas=[]
+  
     method cargar(unaCosa){
         cosasCargadas.add(unaCosa)
+        unaCosa.transformacionAlSerCargada()
     }
     method descargar(unaCosa){
         cosasCargadas.remove(unaCosa)
@@ -13,8 +14,17 @@ object camion{
     method peso() = peso + cosasCargadas.sum({c=> c.peso()})
     method pesosSonPares() = cosasCargadas.all({c=> c.peso().even()})
     method hayAlguna(unPeso) = cosasCargadas.any({c=> c.peso() == unPeso})
-    method primerCosaPeligrosa(nivelPeligroso) = cosasCargadas.findOrDefault ({c=> c.nivelDePeligrosidad() >= nivelPeligroso}, "ninguno")
+    
+    
     method cosasPeligrosas(nivelPeligroso) = cosasCargadas.filter({c=> c.nivelDePeligrosidad() >= nivelPeligroso})
+   
+   method primerCosaPeligrosa(nivelPeligroso) {
+      if  (self.cosasPeligrosas(nivelPeligroso).size() >0)
+       return cosasCargadas.find({c=> c.nivelDePeligrosidad() >= nivelPeligroso})  
+      else return nada  
+    } 
+   
+   
     method hayAlgunaEntre(valorMin,valorMax){
         return cosasCargadas.any({c=>c.peso().between(valorMin, valorMax)})
     }
@@ -28,7 +38,11 @@ object camion{
     
 }  
 
+object nada{
+  method transformacionAlSerCargada(){
 
+   }
+}
 
 
 
@@ -37,18 +51,34 @@ object knigthRider{
     const nivelDePeligrosidad = 10
     method peso()= peso
     method nivelDePeligrosidad()= nivelDePeligrosidad
+    method cantidadBultos(){
+        return (1)
+       
+   }
+   method transformacionAlSerCargada(){
 
+   }
 }
 
 object bumbleBee{
     const peso = 800
-    var nivelDePeligrosidad = 15
+    var transformacion = robot
     method peso()= peso
-    method nivelDePeligrosidad()= nivelDePeligrosidad
-    method nivelDePeligrosidad(unaTransformacion){
-        nivelDePeligrosidad = unaTransformacion.nivelDePeligrosidad()
+    method transformacion()= transformacion
+    method transformacion(unaTransformacion){
+        transformacion = unaTransformacion
     }
+    method nivelDePeligrosidad(){
+        return transformacion.nivelDePeligrosidad()
+    }
+    method cantidadBultos(){  
+        return (2)
+       
+   }
 
+   method transformacionAlSerCargada(){
+     self.transformacion(robot)
+   }
 }
 
 
